@@ -1,6 +1,6 @@
 ---
 title: "Ujian Akhir Semester - Regression Models"
-author: "Muhammad Robeth Suprayitno - Institut Teknologi Statistika dan Bisnis Muhammadiyah"
+author: "Muhammad Robeth Suprayitno-Ahmad Nasuka-Institut Teknologi Statistika dan Bisnis Muhammadiyah"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## A. Tujuan proyek
 
-Membangun aplikasi Shiny yang interaktif untuk melakukan prediksi variabel Y menggunakan analisis regresi linier, dengan dukungan fitur eksplorasi data dan evaluasi model.
+Membangun aplikasi Shiny yang interaktif untuk melakukan prediksi variabel menggunakan analisis regresi linier, dengan dukungan fitur eksplorasi data dan evaluasi model.
 
 ## B. Dataset yang digunakan
 

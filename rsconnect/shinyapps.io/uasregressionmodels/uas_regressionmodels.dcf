@@ -1,0 +1,10 @@
+name: uas_regressionmodels
+title:
+username: uasregressionmodels
+account: uasregressionmodels
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15057871
+bundleId: 10594011
+url: https://uasregressionmodels.shinyapps.io/uas_regressionmodels/
+version: 1
