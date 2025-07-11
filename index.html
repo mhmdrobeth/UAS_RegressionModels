@@ -2754,160 +2754,79 @@ body {
 text-align: justify;
 }
 </style>
-<div id="bagian-1-penjelasan-studi-kasus-alasan-pemilihan-dataset" class="section level1">
-<h1>Bagian 1: Penjelasan studi kasus &amp; alasan pemilihan dataset</h1>
-<div id="a.-tujuan-proyek" class="section level2">
-<h2>A. Tujuan proyek</h2>
-<p>Membangun aplikasi Shiny yang interaktif untuk melakukan prediksi
-variabel menggunakan analisis regresi linier, dengan dukungan fitur
-eksplorasi data dan evaluasi model.</p>
-</div>
-<div id="b.-dataset-yang-digunakan" class="section level2">
-<h2>B. Dataset yang digunakan</h2>
-<div id="dataset-a-buatan-sendiri-data_mahasiswa_train.csv-dan-data_mahasiswa_test.csv" class="section level3">
-<h3>1. Dataset A (buatan sendiri): <code>data_mahasiswa_train.csv</code>
-dan <code>data_mahasiswa_test.csv</code></h3>
+<div id="perancangan-sistem" class="section level1">
+<h1>Perancangan Sistem</h1>
+<div id="desain-sistem" class="section level2">
+<h2>1. Desain Sistem</h2>
+<p>Aplikasi ini dirancang menggunakan bahasa pemrograman
+<strong>R</strong> dengan framework <strong>Shiny</strong>, yang
+memungkinkan pengguna membangun aplikasi web interaktif secara cepat dan
+efisien.</p>
+<p>Desain sistem terdiri dari dua komponen utama, yaitu:</p>
 <ul>
-<li>Isi: Kehadiran, Tugas, UTS, UAS, dan target Nilai_Akhir</li>
-<li>Alasan dipilih: Relevan untuk prediksi skor akhir mahasiswa —
-konteks nyata, familiar, dan mudah dipahami dosen</li>
-<li>Struktur data numerik, cocok untuk regresi linier</li>
+<li><strong>UI (User Interface):</strong> Merancang tampilan antarmuka
+pengguna dengan tema <code>flatly</code>, navigasi menggunakan
+<code>navbarPage</code>, dan lima tab utama untuk mengelola alur kerja
+regresi linier.</li>
+<li><strong>Server Logic:</strong> Menangani seluruh pemrosesan seperti
+pembacaan data, visualisasi, pelatihan model, prediksi, dan penyimpanan
+model.</li>
 </ul>
+<p>Penerapan desain ini bertujuan untuk memberikan pengalaman interaktif
+dalam analisis data numerik menggunakan regresi linier.</p>
 </div>
-<div id="dataset-b-publik-data_penjualan.csv" class="section level3">
-<h3>2. Dataset B (publik): <code>data_penjualan.csv</code></h3>
+<div id="alur-sistem" class="section level2">
+<h2>2. Alur Sistem</h2>
+<p>Secara umum, alur kerja aplikasi dibagi menjadi beberapa tahap utama
+sebagai berikut:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Upload Data Training:</strong><br />
+Pengguna mengunggah dataset pelatihan dalam format <code>.csv</code>,
+yang kemudian ditampilkan dalam bentuk tabel dan ringkasan
+statistik.</p></li>
+<li><p><strong>Eksplorasi Korelasi:</strong><br />
+Variabel numerik dipilih untuk ditampilkan dalam bentuk matriks korelasi
+dengan visualisasi heatmap.</p></li>
+<li><p><strong>Visualisasi Eksploratif:</strong><br />
+Scatterplot antara dua variabel (X dan Y) ditampilkan untuk mengamati
+hubungan visual antar variabel.</p></li>
+<li><p><strong>Pelatihan Model Regresi:</strong><br />
+Pengguna memilih variabel target dan prediktor, melatih model regresi
+linier, lalu menyimpannya sebagai file <code>.rds</code>.</p></li>
+<li><p><strong>Prediksi Data Baru:</strong><br />
+Dataset testing diunggah, lalu digunakan untuk menghasilkan prediksi
+berdasarkan model yang telah disimpan.</p></li>
+<li><p><strong>Unduh Model:</strong><br />
+Model regresi yang telah dilatih dapat diunduh langsung oleh pengguna
+melalui tombol simpan.</p></li>
+</ol>
+<p>Alur ini mencerminkan tahapan umum dalam proses pemodelan regresi
+linier: mulai dari eksplorasi data hingga evaluasi dan prediksi.</p>
+</div>
+<div id="fungsionalitas-sistem" class="section level2">
+<h2>3. Fungsionalitas Sistem</h2>
+<p>Aplikasi memiliki lima tab utama, masing-masing dengan fungsionalitas
+berikut:</p>
 <ul>
-<li>Isi: Iklan_TV, Iklan_Radio, Iklan_Koran, Penjualan</li>
-<li>Semua variabel bersifat numerik, sangat cocok untuk regresi
-linier</li>
-<li>Struktur data menyerupai kasus nyata dalam bisnis dan pemasaran</li>
-<li>Cocok untuk memvisualisasikan hubungan iklan dan hasil
-penjualan</li>
+<li><strong>Data Preview:</strong> Menampilkan data training dan
+ringkasan statistik secara interaktif.</li>
+<li><strong>Correlation Matrix:</strong> Menampilkan hubungan antar
+variabel numerik dalam bentuk heatmap korelasi.</li>
+<li><strong>Exploratory Analysis:</strong> Menyediakan scatterplot
+dinamis antar variabel untuk eksplorasi hubungan visual.</li>
+<li><strong>Model Regresi:</strong> Melatih model regresi linier
+berdasarkan input variabel yang dipilih, menampilkan ringkasan model dan
+visualisasi hasil prediksi.</li>
+<li><strong>Prediksi Data Baru:</strong> Mengunggah data testing,
+memprediksi hasil menggunakan model <code>.rds</code>, dan menampilkan
+hasil prediksi secara interaktif.</li>
 </ul>
-</div>
-</div>
-</div>
-<div id="bagian-2-penjelasan-tiap-fitur-dalam-aplikasi" class="section level1">
-<h1>Bagian 2: Penjelasan tiap fitur dalam aplikasi</h1>
-<div id="tab-data-preview" class="section level2">
-<h2>1. Tab Data Preview</h2>
-<ul>
-<li><strong>Fitur</strong>: Menampilkan data training yang di-upload dan
-ringkasan statistiknya</li>
-<li><strong>Tujuan</strong>: Menyediakan gambaran awal: jumlah baris,
-distribusi nilai, outlier</li>
-<li><strong>Penjelasan</strong>: Pada tab Data Preview, pengguna dapat
-mengunggah file CSV data training. Tabel data dan ringkasan statistik
-secara otomatis ditampilkan untuk memudahkan pemahaman terhadap struktur
-dan nilai-nilai variabel.</li>
-</ul>
-</div>
-<div id="tab-correlation-matrix" class="section level2">
-<h2>2. Tab Correlation Matrix</h2>
-<ul>
-<li><p><strong>Fitur</strong>: Menampilkan korelasi antar variabel
-numerik dalam bentuk matriks dan heatmap</p></li>
-<li><p><strong>Dasar teori</strong>:</p>
-<ul>
-<li>Korelasi positif mendekati 1 → hubungan searah kuat</li>
-<li>Korelasi negatif mendekati -1 → hubungan berlawanan kuat</li>
-<li>Korelasi mendekati 0 → tidak berkorelasi</li>
-</ul></li>
-<li><p><strong>Penjelasan</strong>: Heatmap ini menunjukkan hubungan
-antar variabel numerik. Misalnya, nilai korelasi antara UTS dan
-Nilai_Akhir sebesar 0.85 menunjukkan hubungan yang sangat kuat. Oleh
-karena itu, UTS merupakan variabel yang penting dalam memprediksi skor
-akhir.</p></li>
-</ul>
-</div>
-<div id="tab-exploratory-analysis" class="section level2">
-<h2>3. Tab Exploratory Analysis</h2>
-<ul>
-<li><strong>Fitur</strong>: Scatterplot antara dua variabel yang dipilih
-pengguna</li>
-<li><strong>Kelebihan</strong>: Terdapat gradasi warna berdasarkan
-intensitas target variabel</li>
-<li><strong>Tujuan</strong>: Visualisasi pola dan hubungan dua
-variabel</li>
-<li><strong>Penjelasan</strong>: Scatterplot ini menunjukkan distribusi
-dua variabel. Di sini saya pilih Tugas sebagai X dan Nilai_Akhir sebagai
-Y. Warna titik menunjukkan nilai Nilai_Akhir, di mana warna merah
-menandakan nilai tinggi. Terlihat bahwa semakin tinggi nilai Tugas,
-cenderung semakin tinggi Nilai_Akhir.</li>
-</ul>
-</div>
-<div id="tab-model-regresi" class="section level2">
-<h2>4. Tab Model Regresi</h2>
-<ul>
-<li><p><strong>Fitur</strong>:</p>
-<ul>
-<li>Pengguna pilih target (Y) dan prediktor (X)</li>
-<li>Melatih model regresi linier</li>
-<li>Menampilkan summary dan metrik (R-squared, RMSE, dll.)</li>
-<li>Menampilkan plot Actual vs Predicted</li>
-</ul></li>
-<li><p><strong>Penjelasan</strong>: Di tab ini, pengguna dapat melatih
-model regresi linier berdasarkan data training. Model kemudian disimpan
-ke dalam file <code>model_regresi.rds</code>. Ringkasan model
-menampilkan koefisien, signifikansi variabel, dan R-squared sebagai
-indikator akurasi model. Plot Actual vs Predicted memperlihatkan
-seberapa dekat hasil prediksi dengan nilai sebenarnya. Titik-titik
-mendekati garis putus-putus berarti prediksi cukup akurat.</p></li>
-</ul>
-</div>
-<div id="tab-prediksi-data-baru" class="section level2">
-<h2>5. Tab Prediksi Data Baru</h2>
-<ul>
-<li><p><strong>Fitur</strong>:</p>
-<ul>
-<li>Upload file CSV berisi data testing</li>
-<li>Menampilkan data dan hasil prediksi</li>
-<li>Menggunakan model yang sudah dilatih (<code>readRDS</code>)</li>
-<li>Validasi jika model belum dibuat</li>
-</ul></li>
-<li><p><strong>Penjelasan</strong>: Pengguna bisa mengunggah dataset
-testing yang memiliki struktur kolom yang sama seperti data training.
-Setelah klik tombol <em>Prediksi</em>, aplikasi akan menampilkan kolom
-tambahan <code>Prediksi_Y</code> sebagai hasil dari model
-regresi.</p></li>
-</ul>
-</div>
-</div>
-<div id="bagian-3-penggunaan-saverds-dan-readrds" class="section level1">
-<h1>Bagian 3: Penggunaan <code>saveRDS()</code> dan
-<code>readRDS()</code></h1>
-<ul>
-<li>Fungsi <code>saveRDS(model, &quot;model_regresi.rds&quot;)</code> menyimpan
-model ke file lokal</li>
-<li>Fungsi <code>readRDS(&quot;model_regresi.rds&quot;)</code> memuat kembali
-model tersebut untuk dipakai memprediksi data baru</li>
-<li>Ini memastikan efisiensi, karena model tidak perlu dilatih ulang
-setiap saat</li>
-</ul>
-</div>
-<div id="bagian-4-validasi-input-generalisasi" class="section level1">
-<h1>Bagian 4: Validasi input &amp; generalisasi</h1>
-<ul>
-<li><p>Aplikasi akan menampilkan notifikasi jika:</p>
-<ul>
-<li>File tidak bisa dibaca</li>
-<li>Model belum dibuat saat ingin prediksi</li>
-<li>Kolom X di dataset test tidak cocok dengan model</li>
-</ul></li>
-<li><p>Aplikasi mendukung berbagai dataset numerik karena pemilihan
-variabel dilakukan secara dinamis melalui <code>selectInput</code>,
-<code>checkboxGroupInput</code>, dll.</p></li>
-</ul>
-</div>
-<div id="bagian-5-penutup" class="section level1">
-<h1>Bagian 5: Penutup</h1>
-<div id="kesimpulan" class="section level2">
-<h2>Kesimpulan</h2>
-<p>Aplikasi ini mampu menangani proses analisis regresi linier dari awal
-hingga prediksi. Fleksibel untuk berbagai dataset, serta dilengkapi
-fitur eksplorasi visual, validasi otomatis, dan penyimpanan model. Dapat
-digunakan oleh dosen, peneliti, maupun mahasiswa yang ingin
-mengembangkan pemodelan prediktif berbasis data numerik.</p>
+<p>Fungsionalitas lain meliputi: - Validasi input dan struktur data -
+Penyesuaian otomatis terhadap tipe data - Simpan dan baca ulang model
+regresi dengan <code>saveRDS()</code> dan <code>readRDS()</code></p>
+<p>Seluruh fungsi ini dirancang agar fleksibel digunakan untuk berbagai
+dataset numerik dan ramah bagi pengguna non-programmer seperti dosen
+atau mahasiswa.</p>
 </div>
 </div>
 

@@ -26,99 +26,57 @@ body {
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Bagian 1: Penjelasan studi kasus & alasan pemilihan dataset
+# Perancangan Sistem
 
-## A. Tujuan proyek
+## 1. Desain Sistem
 
-Membangun aplikasi Shiny yang interaktif untuk melakukan prediksi variabel menggunakan analisis regresi linier, dengan dukungan fitur eksplorasi data dan evaluasi model.
+Aplikasi ini dirancang menggunakan bahasa pemrograman **R** dengan framework **Shiny**, yang memungkinkan pengguna membangun aplikasi web interaktif secara cepat dan efisien. 
 
-## B. Dataset yang digunakan
+Desain sistem terdiri dari dua komponen utama, yaitu:
 
-### 1. Dataset A (buatan sendiri): `data_mahasiswa_train.csv` dan `data_mahasiswa_test.csv`
+- **UI (User Interface):** Merancang tampilan antarmuka pengguna dengan tema `flatly`, navigasi menggunakan `navbarPage`, dan lima tab utama untuk mengelola alur kerja regresi linier.
+- **Server Logic:** Menangani seluruh pemrosesan seperti pembacaan data, visualisasi, pelatihan model, prediksi, dan penyimpanan model.
 
-* Isi: Kehadiran, Tugas, UTS, UAS, dan target Nilai\_Akhir
-* Alasan dipilih: Relevan untuk prediksi skor akhir mahasiswa — konteks nyata, familiar, dan mudah dipahami dosen
-* Struktur data numerik, cocok untuk regresi linier
+Penerapan desain ini bertujuan untuk memberikan pengalaman interaktif dalam analisis data numerik menggunakan regresi linier.
 
-### 2. Dataset B (publik): `data_penjualan.csv`
+## 2. Alur Sistem
 
-* Isi: Iklan\_TV, Iklan\_Radio, Iklan\_Koran, Penjualan
-* Semua variabel bersifat numerik, sangat cocok untuk regresi linier
-* Struktur data menyerupai kasus nyata dalam bisnis dan pemasaran
-* Cocok untuk memvisualisasikan hubungan iklan dan hasil penjualan
+Secara umum, alur kerja aplikasi dibagi menjadi beberapa tahap utama sebagai berikut:
 
-# Bagian 2: Penjelasan tiap fitur dalam aplikasi
+1. **Upload Data Training:**  
+   Pengguna mengunggah dataset pelatihan dalam format `.csv`, yang kemudian ditampilkan dalam bentuk tabel dan ringkasan statistik.
 
-## 1. Tab Data Preview
+2. **Eksplorasi Korelasi:**  
+   Variabel numerik dipilih untuk ditampilkan dalam bentuk matriks korelasi dengan visualisasi heatmap.
 
-* **Fitur**: Menampilkan data training yang di-upload dan ringkasan statistiknya
-* **Tujuan**: Menyediakan gambaran awal: jumlah baris, distribusi nilai, outlier
-* **Penjelasan**:
-  Pada tab Data Preview, pengguna dapat mengunggah file CSV data training.
-  Tabel data dan ringkasan statistik secara otomatis ditampilkan untuk memudahkan pemahaman terhadap struktur dan nilai-nilai variabel.
+3. **Visualisasi Eksploratif:**  
+   Scatterplot antara dua variabel (X dan Y) ditampilkan untuk mengamati hubungan visual antar variabel.
 
-## 2. Tab Correlation Matrix
+4. **Pelatihan Model Regresi:**  
+   Pengguna memilih variabel target dan prediktor, melatih model regresi linier, lalu menyimpannya sebagai file `.rds`.
 
-* **Fitur**: Menampilkan korelasi antar variabel numerik dalam bentuk matriks dan heatmap
-* **Dasar teori**:
+5. **Prediksi Data Baru:**  
+   Dataset testing diunggah, lalu digunakan untuk menghasilkan prediksi berdasarkan model yang telah disimpan.
 
-  * Korelasi positif mendekati 1 → hubungan searah kuat
-  * Korelasi negatif mendekati -1 → hubungan berlawanan kuat
-  * Korelasi mendekati 0 → tidak berkorelasi
-* **Penjelasan**:
-  Heatmap ini menunjukkan hubungan antar variabel numerik. Misalnya, nilai korelasi antara UTS dan Nilai\_Akhir sebesar 0.85 menunjukkan hubungan yang sangat kuat. Oleh karena itu, UTS merupakan variabel yang penting dalam memprediksi skor akhir.
+6. **Unduh Model:**  
+   Model regresi yang telah dilatih dapat diunduh langsung oleh pengguna melalui tombol simpan.
 
-## 3. Tab Exploratory Analysis
+Alur ini mencerminkan tahapan umum dalam proses pemodelan regresi linier: mulai dari eksplorasi data hingga evaluasi dan prediksi.
 
-* **Fitur**: Scatterplot antara dua variabel yang dipilih pengguna
-* **Kelebihan**: Terdapat gradasi warna berdasarkan intensitas target variabel
-* **Tujuan**: Visualisasi pola dan hubungan dua variabel
-* **Penjelasan**:
-  Scatterplot ini menunjukkan distribusi dua variabel. Di sini saya pilih Tugas sebagai X dan Nilai\_Akhir sebagai Y. Warna titik menunjukkan nilai Nilai\_Akhir, di mana warna merah menandakan nilai tinggi. Terlihat bahwa semakin tinggi nilai Tugas, cenderung semakin tinggi Nilai\_Akhir.
+## 3. Fungsionalitas Sistem
 
-## 4. Tab Model Regresi
+Aplikasi memiliki lima tab utama, masing-masing dengan fungsionalitas berikut:
 
-* **Fitur**:
+- **Data Preview:** Menampilkan data training dan ringkasan statistik secara interaktif.
+- **Correlation Matrix:** Menampilkan hubungan antar variabel numerik dalam bentuk heatmap korelasi.
+- **Exploratory Analysis:** Menyediakan scatterplot dinamis antar variabel untuk eksplorasi hubungan visual.
+- **Model Regresi:** Melatih model regresi linier berdasarkan input variabel yang dipilih, menampilkan ringkasan model dan visualisasi hasil prediksi.
+- **Prediksi Data Baru:** Mengunggah data testing, memprediksi hasil menggunakan model `.rds`, dan menampilkan hasil prediksi secara interaktif.
 
-  * Pengguna pilih target (Y) dan prediktor (X)
-  * Melatih model regresi linier
-  * Menampilkan summary dan metrik (R-squared, RMSE, dll.)
-  * Menampilkan plot Actual vs Predicted
-* **Penjelasan**:
-  Di tab ini, pengguna dapat melatih model regresi linier berdasarkan data training. Model kemudian disimpan ke dalam file `model_regresi.rds`.
-  Ringkasan model menampilkan koefisien, signifikansi variabel, dan R-squared sebagai indikator akurasi model.
-  Plot Actual vs Predicted memperlihatkan seberapa dekat hasil prediksi dengan nilai sebenarnya. Titik-titik mendekati garis putus-putus berarti prediksi cukup akurat.
+Fungsionalitas lain meliputi:
+- Validasi input dan struktur data
+- Penyesuaian otomatis terhadap tipe data
+- Simpan dan baca ulang model regresi dengan `saveRDS()` dan `readRDS()`
 
-## 5. Tab Prediksi Data Baru
+Seluruh fungsi ini dirancang agar fleksibel digunakan untuk berbagai dataset numerik dan ramah bagi pengguna non-programmer seperti dosen atau mahasiswa.
 
-* **Fitur**:
-
-  * Upload file CSV berisi data testing
-  * Menampilkan data dan hasil prediksi
-  * Menggunakan model yang sudah dilatih (`readRDS`)
-  * Validasi jika model belum dibuat
-* **Penjelasan**:
-  Pengguna bisa mengunggah dataset testing yang memiliki struktur kolom yang sama seperti data training. Setelah klik tombol *Prediksi*, aplikasi akan menampilkan kolom tambahan `Prediksi_Y` sebagai hasil dari model regresi.
-
-# Bagian 3: Penggunaan `saveRDS()` dan `readRDS()`
-
-* Fungsi `saveRDS(model, "model_regresi.rds")` menyimpan model ke file lokal
-* Fungsi `readRDS("model_regresi.rds")` memuat kembali model tersebut untuk dipakai memprediksi data baru
-* Ini memastikan efisiensi, karena model tidak perlu dilatih ulang setiap saat
-
-# Bagian 4: Validasi input & generalisasi
-
-* Aplikasi akan menampilkan notifikasi jika:
-
-  * File tidak bisa dibaca
-  * Model belum dibuat saat ingin prediksi
-  * Kolom X di dataset test tidak cocok dengan model
-* Aplikasi mendukung berbagai dataset numerik karena pemilihan variabel dilakukan secara dinamis melalui `selectInput`, `checkboxGroupInput`, dll.
-
-# Bagian 5: Penutup
-
-## Kesimpulan
-
-Aplikasi ini mampu menangani proses analisis regresi linier dari awal hingga prediksi.
-Fleksibel untuk berbagai dataset, serta dilengkapi fitur eksplorasi visual, validasi otomatis, dan penyimpanan model.
-Dapat digunakan oleh dosen, peneliti, maupun mahasiswa yang ingin mengembangkan pemodelan prediktif berbasis data numerik.
